@@ -18,7 +18,7 @@ const COMPONENT_TYPES = {
   string:  "StringField",
 };
 
-function getFieldComponent(schema, uiSchema, fields) {
+function getFieldComponent(schema, name, uiSchema, fields) {
   const field = uiSchema["ui:field"];
   if (typeof field === "function") {
     return field;
@@ -26,7 +26,11 @@ function getFieldComponent(schema, uiSchema, fields) {
   if (typeof field === "string" && field in fields) {
     return fields[field];
   }
-  const componentName = COMPONENT_TYPES[schema.type];
+
+
+  // anyOf logic is handled inside the ArrayField component
+  const type = name === "anyOf" ? "array" : schema.type;
+  const componentName = COMPONENT_TYPES[type];
   return componentName in fields ? fields[componentName] : UnsupportedField;
 }
 
@@ -132,7 +136,7 @@ function SchemaField(props) {
   const {uiSchema, errorSchema, idSchema, name, required, registry} = props;
   const {definitions, fields, formContext, FieldTemplate = DefaultTemplate} = registry;
   const schema = retrieveSchema(props.schema, definitions);
-  const FieldComponent = getFieldComponent(schema, uiSchema, fields);
+  const FieldComponent = getFieldComponent(schema, name, uiSchema, fields);
   const {DescriptionField} = fields;
   const disabled = Boolean(props.disabled || uiSchema["ui:disabled"]);
   const readonly = Boolean(props.readonly || uiSchema["ui:readonly"]);
