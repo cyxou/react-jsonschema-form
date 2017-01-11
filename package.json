@@ -1,6 +1,6 @@
 {
-  "name": "react-jsonschema-form",
-  "version": "0.41.2",
+  "name": "@cyxou/react-jsonschema-form",
+  "version": "0.42.0",
   "description": "A simple React component capable of building HTML forms out of a JSON schema.",
   "scripts": {
     "build:readme": "toctoc README.md -w",
@@ -10,7 +10,7 @@
     "dist": "npm run build:lib && npm run build:dist",
     "lint": "eslint src test",
     "publish-to-gh-pages": "npm run build:playground && gh-pages --dist build/",
-    "publish-to-npm": "npm run build:readme && npm run dist && npm publish",
+    "publish-to-npm": "npm run build:readme && npm run dist && npm publish --access=public",
     "start": "node devServer.js",
     "tdd": "cross-env NODE_ENV=test  mocha --compilers js:babel-register --watch --require ./test/setup-jsdom.js test/**/*_test.js",
     "test": " cross-env NODE_ENV=test   mocha --compilers js:babel-register --require ./test/setup-jsdom.js test/**/*_test.js"
